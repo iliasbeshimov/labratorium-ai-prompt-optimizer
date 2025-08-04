@@ -1,66 +1,4 @@
-// Background service worker for Labratorium AI Prompt Optimizer
-
-// Installation handler
-chrome.runtime.onInstalled.addListener((details) => {
-    if (details.reason === 'install') {
-        // Set default settings
-        chrome.storage.local.set({
-            model: 'claude-3-5-sonnet-20241022',
-            contextStyle: 'comprehensive'
-        });
-    }
-    
-    // Create context menu
-    chrome.contextMenus.create({
-        id: 'optimize-selection',
-        title: 'Optimize with Labratorium',
-        contexts: ['selection']
-    });
-});
-
-// Message handling
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === 'optimizePrompt') {
-        handleOptimizePrompt(request.data, sendResponse);
-        return true;
-    }
-    
-    if (request.action === 'getSettings') {
-        chrome.storage.local.get(['apiKey', 'model', 'contextStyle'])
-            .then(settings => sendResponse({ success: true, settings }))
-            .catch(error => sendResponse({ success: false, error: error.message }));
-        return true;
-    }
-    
-    if (request.action === 'saveSettings') {
-        chrome.storage.local.set(request.data)
-            .then(() => sendResponse({ success: true }))
-            .catch(error => sendResponse({ success: false, error: error.message }));
-        return true;
-    }
-});
-
-// Handle prompt optimization
-async function handleOptimizePrompt(data, sendResponse) {
-    try {
-        const { userPrompt, apiKey, model, contextStyle } = data;
-        
-        if (!userPrompt || !apiKey) {
-            throw new Error('Missing required parameters');
-        }
-        
-        const optimizedPrompt = await callClaudeAPI(userPrompt, apiKey, model, contextStyle);
-        sendResponse({ success: true, optimizedPrompt });
-        
-    } catch (error) {
-        sendResponse({ success: false, error: error.message });
-    }
-}
-
-// Simple Claude API call
-async function callClaudeAPI(userPrompt, apiKey, model = 'claude-3-5-sonnet-20241022', contextStyle = 'comprehensive') {
-    const prompts = {
-        comprehensive: `You are an expert prompt engineer. Analyze the user's prompt and return ONLY an improved version that follows prompt engineering best practices. Do not include explanations, analysis, or additional commentary.
+chrome.runtime.onInstalled.addListener(e=>{"install"===e.reason&&chrome.storage.local.set({model:"claude-3-5-sonnet-20241022",contextStyle:"comprehensive"}),chrome.contextMenus.create({id:"optimize-selection",title:"Optimize with Labratorium",contexts:["selection"]})});chrome.runtime.onMessage.addListener((e,t,n)=>{return"optimizePrompt"===e.action?(r(e.data,n),!0):"getSettings"===e.action?(chrome.storage.local.get(["apiKey","model","contextStyle"]).then(e=>n({success:!0,settings:e})).catch(e=>n({success:!1,error:e.message})),!0):"saveSettings"===e.action?(chrome.storage.local.set(e.data).then(()=>n({success:!0})).catch(e=>n({success:!1,error:e.message})),!0):void 0});async function r(e,t){try{const{userPrompt:n,apiKey:r,model:o,contextStyle:s}=e;if(!n||!r)throw new Error("Missing required parameters");const a=await c(n,r,o,s);t({success:!0,optimizedPrompt:a})}catch(e){t({success:!1,error:e.message})}}async function c(e,t,n="claude-3-5-sonnet-20241022",r="comprehensive"){const o={comprehensive:`You are an expert prompt engineer. Analyze the user's prompt and return ONLY an improved version that follows prompt engineering best practices. Do not include explanations, analysis, or additional commentary.
 
 Original Prompt:
 {USER_PROMPT}
@@ -75,15 +13,11 @@ Improvement Guidelines: Apply these best practices to create a superior prompt:
 • **Request reasoning**: For complex tasks, ask for step-by-step thinking or explanation of approach
 • **Control scope**: Be specific about depth, length, and focus areas
 
-Instructions: Transform the original prompt into a significantly improved version that preserves the user's intent while applying prompt engineering best practices. Return ONLY the improved prompt in markdown format with no additional text, explanations, or formatting markers.`,
-
-        quick: `You are an expert prompt engineer. Improve the following prompt by making it clearer, more specific, and better structured. Apply core prompt engineering principles: use clear action verbs, specify output format, add helpful context, and use positive instructions.
+Instructions: Transform the original prompt into a significantly improved version that preserves the user's intent while applying prompt engineering best practices. Return ONLY the improved prompt in markdown format with no additional text, explanations, or formatting markers.`,quick:`You are an expert prompt engineer. Improve the following prompt by making it clearer, more specific, and better structured. Apply core prompt engineering principles: use clear action verbs, specify output format, add helpful context, and use positive instructions.
 
 Original prompt: {USER_PROMPT}
 
-Return ONLY the improved prompt in markdown format with no explanations.`,
-
-        structured: `You are an expert prompt engineer specializing in structured prompts. Transform the following prompt using these principles:
+Return ONLY the improved prompt in markdown format with no explanations.`,structured:`You are an expert prompt engineer specializing in structured prompts. Transform the following prompt using these principles:
 • Clear action verbs and specific instructions
 • Defined output format (markdown, JSON, bullets, etc.)
 • Proper context and background information
@@ -92,9 +26,7 @@ Return ONLY the improved prompt in markdown format with no explanations.`,
 
 Original prompt: {USER_PROMPT}
 
-Return ONLY the restructured prompt in markdown format that follows these best practices.`,
-
-        creative: `You are an expert prompt engineer focused on creative enhancement. Improve the following prompt to unlock innovative AI responses by:
+Return ONLY the restructured prompt in markdown format that follows these best practices.`,creative:`You are an expert prompt engineer focused on creative enhancement. Improve the following prompt to unlock innovative AI responses by:
 • Adding role context ("Act as [creative expert]")
 • Encouraging multiple perspectives and original thinking
 • Including example formats for creative outputs
@@ -103,45 +35,4 @@ Return ONLY the restructured prompt in markdown format that follows these best p
 
 Original prompt: {USER_PROMPT}
 
-Return ONLY the enhanced creative prompt in markdown format with no additional commentary.`
-    };
-    
-    const systemPrompt = (prompts[contextStyle] || prompts.comprehensive)
-        .replace('{USER_PROMPT}', userPrompt);
-    
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01'
-        },
-        body: JSON.stringify({
-            model: model,
-            max_tokens: 1500,
-            messages: [{ role: 'user', content: systemPrompt }]
-        })
-    });
-    
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error?.message || `HTTP ${response.status}: ${response.statusText}`);
-    }
-    
-    const data = await response.json();
-    return data.content[0].text;
-}
-
-// Context menu handler
-chrome.contextMenus.onClicked.addListener(async (info, tab) => {
-    if (info.menuItemId === 'optimize-selection' && info.selectionText) {
-        try {
-            await chrome.tabs.sendMessage(tab.id, {
-                action: 'optimizeSelection',
-                text: info.selectionText
-            });
-        } catch (error) {
-            console.error('Failed to send message to content script:', error);
-        }
-    }
-});
+Return ONLY the enhanced creative prompt in markdown format with no additional commentary.`},s=(o[r]||o.comprehensive).replace("{USER_PROMPT}",e),a=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":t,"anthropic-version":"2023-06-01"},body:JSON.stringify({model:n,max_tokens:1500,messages:[{role:"user",content:s}]})});if(!a.ok){const e=await a.json().catch(()=>({}));throw new Error(e.error?.message||`HTTP ${a.status}: ${a.statusText}`)}return(await a.json()).content[0].text}chrome.contextMenus.onClicked.addListener(async(e,t)=>{"optimize-selection"===e.menuItemId&&e.selectionText&&chrome.tabs.sendMessage(t.id,{action:"optimizeSelection",text:e.selectionText}).catch(e=>console.error("Failed to send message to content script:",e))});
