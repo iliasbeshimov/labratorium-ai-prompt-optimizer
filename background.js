@@ -3,37 +3,44 @@
 // Installation handler
 chrome.runtime.onInstalled.addListener((details) => {
     if (details.reason === 'install') {
-        // Set default settings on first install
+        // Set default settings
         chrome.storage.local.set({
             model: 'claude-3-5-sonnet-20241022',
             contextStyle: 'comprehensive'
         });
-        
-        console.log('Labratorium AI Prompt Optimizer installed');
     }
+    
+    // Create context menu
+    chrome.contextMenus.create({
+        id: 'optimize-selection',
+        title: 'Optimize with Labratorium',
+        contexts: ['selection']
+    });
 });
 
-// Message handling for content script communication
+// Message handling
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    switch (request.action) {
-        case 'optimizePrompt':
-            handleOptimizePrompt(request.data, sendResponse);
-            return true; // Keep message channel open for async response
-            
-        case 'getSettings':
-            handleGetSettings(sendResponse);
-            return true;
-            
-        case 'saveSettings':
-            handleSaveSettings(request.data, sendResponse);
-            return true;
-            
-        default:
-            sendResponse({ error: 'Unknown action' });
+    if (request.action === 'optimizePrompt') {
+        handleOptimizePrompt(request.data, sendResponse);
+        return true;
+    }
+    
+    if (request.action === 'getSettings') {
+        chrome.storage.local.get(['apiKey', 'model', 'contextStyle'])
+            .then(settings => sendResponse({ success: true, settings }))
+            .catch(error => sendResponse({ success: false, error: error.message }));
+        return true;
+    }
+    
+    if (request.action === 'saveSettings') {
+        chrome.storage.local.set(request.data)
+            .then(() => sendResponse({ success: true }))
+            .catch(error => sendResponse({ success: false, error: error.message }));
+        return true;
     }
 });
 
-// Handle prompt optimization request
+// Handle prompt optimization
 async function handleOptimizePrompt(data, sendResponse) {
     try {
         const { userPrompt, apiKey, model, contextStyle } = data;
@@ -43,44 +50,16 @@ async function handleOptimizePrompt(data, sendResponse) {
         }
         
         const optimizedPrompt = await callClaudeAPI(userPrompt, apiKey, model, contextStyle);
+        sendResponse({ success: true, optimizedPrompt });
         
-        sendResponse({ 
-            success: true, 
-            optimizedPrompt: optimizedPrompt 
-        });
-        
-    } catch (error) {
-        console.error('Optimization error:', error);
-        sendResponse({ 
-            success: false, 
-            error: error.message 
-        });
-    }
-}
-
-// Handle getting settings
-async function handleGetSettings(sendResponse) {
-    try {
-        const settings = await chrome.storage.local.get(['apiKey', 'model', 'contextStyle']);
-        sendResponse({ success: true, settings });
     } catch (error) {
         sendResponse({ success: false, error: error.message });
     }
 }
 
-// Handle saving settings
-async function handleSaveSettings(settings, sendResponse) {
-    try {
-        await chrome.storage.local.set(settings);
-        sendResponse({ success: true });
-    } catch (error) {
-        sendResponse({ success: false, error: error.message });
-    }
-}
-
-// Call Claude API
+// Simple Claude API call
 async function callClaudeAPI(userPrompt, apiKey, model = 'claude-3-5-sonnet-20241022', contextStyle = 'comprehensive') {
-    const contextPrompts = {
+    const prompts = {
         comprehensive: `You are an expert prompt engineer. Analyze the user's prompt and return ONLY an improved version that follows prompt engineering best practices. Do not include explanations, analysis, or additional commentary.
 
 Original Prompt:
@@ -127,7 +106,8 @@ Original prompt: {USER_PROMPT}
 Return ONLY the enhanced creative prompt in markdown format with no additional commentary.`
     };
     
-    const systemPrompt = contextPrompts[contextStyle] || contextPrompts.comprehensive;
+    const systemPrompt = (prompts[contextStyle] || prompts.comprehensive)
+        .replace('{USER_PROMPT}', userPrompt);
     
     const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
@@ -138,13 +118,8 @@ Return ONLY the enhanced creative prompt in markdown format with no additional c
         },
         body: JSON.stringify({
             model: model,
-            max_tokens: 1000,
-            messages: [
-                {
-                    role: 'user',
-                    content: `${systemPrompt}\n\nOriginal prompt:\n${userPrompt}`
-                }
-            ]
+            max_tokens: 1500,
+            messages: [{ role: 'user', content: systemPrompt }]
         })
     });
     
@@ -157,27 +132,9 @@ Return ONLY the enhanced creative prompt in markdown format with no additional c
     return data.content[0].text;
 }
 
-// Keyboard shortcut listener (if we want to add global shortcuts later)
-chrome.commands?.onCommand?.addListener((command) => {
-    switch (command) {
-        case 'open-optimizer':
-            chrome.action.openPopup();
-            break;
-    }
-});
-
-// Context menu for right-click optimization
-chrome.runtime.onInstalled.addListener(() => {
-    chrome.contextMenus.create({
-        id: 'optimize-selection',
-        title: 'Optimize with Labratorium',
-        contexts: ['selection']
-    });
-});
-
+// Context menu handler
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
     if (info.menuItemId === 'optimize-selection' && info.selectionText) {
-        // Send message to content script to handle the selected text
         try {
             await chrome.tabs.sendMessage(tab.id, {
                 action: 'optimizeSelection',
@@ -185,16 +142,6 @@ chrome.contextMenus.onClicked.addListener(async (info, tab) => {
             });
         } catch (error) {
             console.error('Failed to send message to content script:', error);
-            // Fallback: open popup
-            chrome.action.openPopup();
         }
     }
 });
-
-// Error reporting (simplified)
-function reportError(error, context = 'unknown') {
-    console.error(`Labratorium AI Prompt Optimizer Error [${context}]:`, error);
-    
-    // Privacy-focused: No external error tracking
-    // Errors are only logged locally for debugging
-}

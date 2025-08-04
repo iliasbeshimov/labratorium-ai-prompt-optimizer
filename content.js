@@ -1,6 +1,4 @@
 // Content script for Claude Prompt Optimizer
-// Handles text selection optimization and page integration
-
 class ClaudeOptimizerContent {
     constructor() {
         this.selectedText = '';
@@ -14,37 +12,28 @@ class ClaudeOptimizerContent {
     
     setupMessageListener() {
         chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-            switch (request.action) {
-                case 'optimizeSelection':
-                    this.handleOptimizeSelection(request.text);
-                    break;
-                    
-                case 'getPageText':
-                    sendResponse({ text: this.getSelectedOrPageText() });
-                    break;
-                    
-                default:
-                    return false;
+            if (request.action === 'optimizeSelection') {
+                this.handleOptimizeSelection(request.text);
             }
             return true;
         });
     }
     
     setupTextSelection() {
-        // Store selected text for context menu usage
+        // Store selected text for context menu
         document.addEventListener('mouseup', () => {
             const selection = window.getSelection();
             this.selectedText = selection.toString().trim();
         });
         
-        // Optional: Add floating button for selected text
+        // Show floating button for text selection
         document.addEventListener('mouseup', (e) => {
             setTimeout(() => {
                 const selection = window.getSelection();
                 const text = selection.toString().trim();
                 
-                if (text.length > 10) { // Only show for meaningful selections
-                    this.showFloatingOptimizeButton(e.pageX, e.pageY, text);
+                if (text.length > 10) {
+                    this.showFloatingButton(e.pageX, e.pageY, text);
                 }
             }, 100);
         });
@@ -57,48 +46,42 @@ class ClaudeOptimizerContent {
         });
     }
     
-    showFloatingOptimizeButton(x, y, text) {
-        // Remove existing button
+    showFloatingButton(x, y, text) {
         this.hideFloatingButton();
         
-        // Create floating button
         const button = document.createElement('div');
         button.className = 'claude-optimizer-float';
-        button.innerHTML = `
-            <div style="
-                position: fixed;
-                top: ${y + 10}px;
-                left: ${x}px;
-                z-index: 10000;
-                background: #000000;
-                color: #ffffff;
-                padding: 8px 12px;
-                border-radius: 0;
-                font-family: 'Courier New', monospace;
-                font-size: 12px;
-                font-weight: 700;
-                cursor: pointer;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                border: none;
-                transition: all 0.2s ease;
-                text-transform: uppercase;
-                letter-spacing: 0.05em;
-            ">
-                🧪 Optimize with Labratorium
-            </div>
+        button.style.cssText = `
+            position: fixed !important;
+            top: ${y + 10}px !important;
+            left: ${x}px !important;
+            z-index: 10000 !important;
+            background: #000000 !important;
+            color: #ffffff !important;
+            padding: 8px 12px !important;
+            border-radius: 0 !important;
+            font-family: 'Courier New', monospace !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+            border: none !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em !important;
         `;
+        button.textContent = '🧪 Optimize with Labratorium';
         
         button.addEventListener('click', () => {
             this.optimizeSelectedText(text);
             this.hideFloatingButton();
         });
         
-        button.addEventListener('mouseenter', (e) => {
-            e.target.style.background = '#565151';
+        button.addEventListener('mouseenter', () => {
+            button.style.background = '#565151 !important';
         });
         
-        button.addEventListener('mouseleave', (e) => {
-            e.target.style.background = '#000000';
+        button.addEventListener('mouseleave', () => {
+            button.style.background = '#000000 !important';
         });
         
         document.body.appendChild(button);
@@ -126,11 +109,15 @@ class ClaudeOptimizerContent {
     }
     
     async optimizeSelectedText(text) {
-        // Show loading notification
+        if (!text || text.trim().length < 10) {
+            this.showNotification('Please select more text (at least 10 characters)', 'error');
+            return;
+        }
+        
         this.showNotification('🧪 Optimizing with Labratorium AI...', 'loading');
         
         try {
-            // Get settings from storage
+            // Get settings
             const settings = await chrome.storage.local.get(['apiKey', 'model', 'contextStyle']);
             
             if (!settings.apiKey) {
@@ -138,7 +125,7 @@ class ClaudeOptimizerContent {
                 return;
             }
             
-            // Send optimization request to background script
+            // Send optimization request
             const response = await chrome.runtime.sendMessage({
                 action: 'optimizePrompt',
                 data: {
@@ -149,10 +136,10 @@ class ClaudeOptimizerContent {
                 }
             });
             
-            if (response.success) {
+            if (response && response.success) {
                 this.showOptimizedResult(text, response.optimizedPrompt);
             } else {
-                this.showNotification('Optimization failed: ' + response.error, 'error');
+                this.showNotification('Optimization failed: ' + (response ? response.error : 'Unknown error'), 'error');
             }
             
         } catch (error) {
@@ -162,142 +149,140 @@ class ClaudeOptimizerContent {
     }
     
     showOptimizedResult(originalText, optimizedText) {
-        // Remove existing modal
         this.hideResultModal();
         
-        // Create result modal
         const modal = document.createElement('div');
         modal.className = 'claude-optimizer-modal';
+        modal.style.cssText = `
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background: rgba(0,0,0,0.5) !important;
+            z-index: 10001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 20px !important;
+            box-sizing: border-box !important;
+        `;
+        
         modal.innerHTML = `
             <div style="
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0,0,0,0.5);
-                z-index: 10001;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                padding: 20px;
-                box-sizing: border-box;
+                background: white !important;
+                border-radius: 12px !important;
+                max-width: 800px !important;
+                width: 100% !important;
+                max-height: 80vh !important;
+                overflow: hidden !important;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.3) !important;
             ">
                 <div style="
-                    background: white;
-                    border-radius: 12px;
-                    max-width: 800px;
-                    width: 100%;
-                    max-height: 80vh;
-                    overflow: hidden;
-                    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+                    padding: 20px !important;
+                    border-bottom: 1px solid #d2caca !important;
+                    display: flex !important;
+                    justify-content: space-between !important;
+                    align-items: center !important;
                 ">
-                    <div style="
-                        padding: 20px;
-                        border-bottom: 1px solid #d2caca;
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                    ">
-                        <h3 style="
-                            margin: 0;
-                            font-family: 'Courier New', monospace;
-                            color: #000000;
-                            font-size: 18px;
-                            font-weight: 700;
-                        ">🧪 Labratorium AI Optimizer</h3>
-                        <button class="close-modal" style="
-                            background: none;
-                            border: none;
-                            font-size: 24px;
-                            cursor: pointer;
-                            color: #6b7280;
-                            padding: 0;
-                            width: 30px;
-                            height: 30px;
-                            display: flex;
-                            align-items: center;
-                            justify-content: center;
-                        ">×</button>
+                    <h3 style="
+                        margin: 0 !important;
+                        font-family: 'Courier New', monospace !important;
+                        color: #000000 !important;
+                        font-size: 18px !important;
+                        font-weight: 700 !important;
+                    ">🧪 Labratorium AI Optimizer</h3>
+                    <button class="close-modal" style="
+                        background: none !important;
+                        border: none !important;
+                        font-size: 24px !important;
+                        cursor: pointer !important;
+                        color: #6b7280 !important;
+                        padding: 0 !important;
+                        width: 30px !important;
+                        height: 30px !important;
+                        display: flex !important;
+                        align-items: center !important;
+                        justify-content: center !important;
+                    ">×</button>
+                </div>
+                
+                <div style="padding: 20px !important; overflow-y: auto !important; max-height: calc(80vh - 140px) !important;">
+                    <div style="margin-bottom: 20px !important;">
+                        <h4 style="
+                            margin: 0 0 10px 0 !important;
+                            font-family: 'Courier New', monospace !important;
+                            color: #6b7280 !important;
+                            font-size: 14px !important;
+                            font-weight: 700 !important;
+                        ">Original:</h4>
+                        <div style="
+                            background: #f4f1f1 !important;
+                            padding: 15px !important;
+                            border-radius: 0 !important;
+                            font-family: 'Courier New', monospace !important;
+                            font-size: 14px !important;
+                            line-height: 1.333 !important;
+                            color: #000000 !important;
+                            border: 1px solid #d2caca !important;
+                        ">${this.escapeHtml(originalText)}</div>
                     </div>
                     
-                    <div style="padding: 20px; overflow-y: auto; max-height: calc(80vh - 140px);">
-                        <div style="margin-bottom: 20px;">
-                            <h4 style="
-                                margin: 0 0 10px 0;
-                                font-family: 'Courier New', monospace;
-                                color: #6b7280;
-                                font-size: 14px;
-                                font-weight: 700;
-                            ">Original:</h4>
-                            <div style="
-                                background: #f4f1f1;
-                                padding: 15px;
-                                border-radius: 0;
-                                font-family: 'Courier New', monospace;
-                                font-size: 14px;
-                                line-height: 1.333;
-                                color: #000000;
-                                border: 1px solid #d2caca;
-                            ">${this.escapeHtml(originalText)}</div>
-                        </div>
-                        
-                        <div style="margin-bottom: 20px;">
-                            <h4 style="
-                                margin: 0 0 10px 0;
-                                font-family: 'Courier New', monospace;
-                                color: #000000;
-                                font-size: 14px;
-                                font-weight: 700;
-                            ">Optimized:</h4>
-                            <div class="optimized-content" style="
-                                background: #ffffff;
-                                padding: 15px;
-                                border-radius: 0;
-                                font-family: 'Courier New', monospace;
-                                font-size: 13px;
-                                line-height: 1.333;
-                                color: #000000;
-                                border: 2px solid #000000;
-                                white-space: pre-wrap;
-                            ">${this.escapeHtml(optimizedText)}</div>
-                        </div>
+                    <div style="margin-bottom: 20px !important;">
+                        <h4 style="
+                            margin: 0 0 10px 0 !important;
+                            font-family: 'Courier New', monospace !important;
+                            color: #000000 !important;
+                            font-size: 14px !important;
+                            font-weight: 700 !important;
+                        ">Optimized:</h4>
+                        <div class="optimized-content" style="
+                            background: #ffffff !important;
+                            padding: 15px !important;
+                            border-radius: 0 !important;
+                            font-family: 'Courier New', monospace !important;
+                            font-size: 13px !important;
+                            line-height: 1.333 !important;
+                            color: #000000 !important;
+                            border: 2px solid #000000 !important;
+                            white-space: pre-wrap !important;
+                        ">${this.escapeHtml(optimizedText)}</div>
                     </div>
-                    
-                    <div style="
-                        padding: 20px;
-                        border-top: 1px solid #d2caca;
-                        display: flex;
-                        gap: 10px;
-                        justify-content: flex-end;
-                    ">
-                        <button class="copy-optimized" style="
-                            background: #000000;
-                            color: #ffffff;
-                            border: none;
-                            padding: 10px 20px;
-                            border-radius: 0;
-                            cursor: pointer;
-                            font-family: 'Courier New', monospace;
-                            font-size: 14px;
-                            font-weight: 700;
-                            text-transform: uppercase;
-                            letter-spacing: 0.05em;
-                        ">Copy Optimized</button>
-                        <button class="close-modal" style="
-                            background: #f4f1f1;
-                            color: #565151;
-                            border: 1px solid #d2caca;
-                            padding: 10px 20px;
-                            border-radius: 0;
-                            cursor: pointer;
-                            font-family: 'Courier New', monospace;
-                            font-size: 14px;
-                            font-weight: 700;
-                            text-transform: uppercase;
-                            letter-spacing: 0.05em;
-                        ">Close</button>
-                    </div>
+                </div>
+                
+                <div style="
+                    padding: 20px !important;
+                    border-top: 1px solid #d2caca !important;
+                    display: flex !important;
+                    gap: 10px !important;
+                    justify-content: flex-end !important;
+                ">
+                    <button class="copy-optimized" style="
+                        background: #000000 !important;
+                        color: #ffffff !important;
+                        border: none !important;
+                        padding: 10px 20px !important;
+                        border-radius: 0 !important;
+                        cursor: pointer !important;
+                        font-family: 'Courier New', monospace !important;
+                        font-size: 14px !important;
+                        font-weight: 700 !important;
+                        text-transform: uppercase !important;
+                        letter-spacing: 0.05em !important;
+                    ">Copy Optimized</button>
+                    <button class="close-modal" style="
+                        background: #f4f1f1 !important;
+                        color: #565151 !important;
+                        border: 1px solid #d2caca !important;
+                        padding: 10px 20px !important;
+                        border-radius: 0 !important;
+                        cursor: pointer !important;
+                        font-family: 'Courier New', monospace !important;
+                        font-size: 14px !important;
+                        font-weight: 700 !important;
+                        text-transform: uppercase !important;
+                        letter-spacing: 0.05em !important;
+                    ">Close</button>
                 </div>
             </div>
         `;
@@ -365,46 +350,23 @@ class ClaudeOptimizerContent {
         
         const notification = document.createElement('div');
         notification.className = 'claude-optimizer-notification';
-        notification.innerHTML = `
-            <div style="
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                z-index: 10002;
-                background: ${color.bg};
-                color: ${color.text};
-                padding: 15px 20px;
-                border-radius: 8px;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-                font-size: 14px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-                border: 1px solid ${color.border};
-                max-width: 300px;
-                word-wrap: break-word;
-                animation: slideIn 0.3s ease-out;
-            ">
-                ${this.escapeHtml(message)}
-            </div>
+        notification.style.cssText = `
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            z-index: 10002 !important;
+            background: ${color.bg} !important;
+            color: ${color.text} !important;
+            padding: 15px 20px !important;
+            border-radius: 8px !important;
+            font-family: 'Courier New', monospace !important;
+            font-size: 14px !important;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+            border: 1px solid ${color.border} !important;
+            max-width: 300px !important;
+            word-wrap: break-word !important;
         `;
-        
-        // Add animation styles
-        if (!document.querySelector('#claude-optimizer-styles')) {
-            const styles = document.createElement('style');
-            styles.id = 'claude-optimizer-styles';
-            styles.textContent = `
-                @keyframes slideIn {
-                    from {
-                        transform: translateX(100%);
-                        opacity: 0;
-                    }
-                    to {
-                        transform: translateX(0);
-                        opacity: 1;
-                    }
-                }
-            `;
-            document.head.appendChild(styles);
-        }
+        notification.textContent = message;
         
         document.body.appendChild(notification);
         
@@ -414,24 +376,6 @@ class ClaudeOptimizerContent {
                 notification.remove();
             }, type === 'error' ? 5000 : 3000);
         }
-    }
-    
-    getSelectedOrPageText() {
-        const selection = window.getSelection();
-        const selectedText = selection.toString().trim();
-        
-        if (selectedText) {
-            return selectedText;
-        }
-        
-        // Fallback: get text from common input fields
-        const activeElement = document.activeElement;
-        if (activeElement && (activeElement.tagName === 'TEXTAREA' || 
-            (activeElement.tagName === 'INPUT' && activeElement.type === 'text'))) {
-            return activeElement.value;
-        }
-        
-        return '';
     }
     
     escapeHtml(text) {
