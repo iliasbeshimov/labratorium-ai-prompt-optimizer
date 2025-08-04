@@ -1,0 +1,21 @@
+{
+  "name": "labratorium-ai-prompt-optimizer",
+  "version": "1.0.0",
+  "description": "Privacy-focused Chrome extension for optimizing AI prompts using Claude API",
+  "scripts": {
+    "dev": "node dev-server.js",
+    "build": "npm run clean && npm run minify",
+    "clean": "echo 'Cleaning build artifacts...'",
+    "minify": "npm run minify-js && npm run minify-html",
+    "minify-js": "echo 'Minifying JavaScript files...'",
+    "minify-html": "echo 'Minifying HTML files...'",
+    "watch": "nodemon --watch . --ext js,html,json --ignore node_modules --exec 'echo File changed at $(date)'",
+    "reload-extension": "echo 'Extension reloaded' && curl -s http://localhost:3000/reload || echo 'Dev server not running'"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "keywords": ["chrome-extension", "ai", "claude", "prompt-optimization"],
+  "author": "Labratorium.com",
+  "license": "MIT"
+}
