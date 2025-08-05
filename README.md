@@ -1,269 +1,228 @@
-### Data Handling
-- **API Key Storage**: Stored locally in Chrome's secure storage only
-- **Zero Data Collection**: Labratorium.com never sees your prompts or API usage
-- **Direct API Communication**: Prompts sent directly to Anthropic's servers
-- **No Third-party Servers**: No intermediate logging or processing systems
-- **Local Processing**: All optimization requests processed in your browser
+# Labratorium AI Prompt Optimizer
 
-### Permissions Explained
-- **storage**: Save your API key and settings locally in your browser
-- **activeTab**: Access selected text# Labratorium AI Prompt Optimizer
-
-A privacy-focused Chrome extension by [Labratorium.com](https://labratorium.com) that helps you optimize your AI prompts using Claude for better results. Transform your basic prompts into well-structured, effective instructions while keeping your data completely private.
+A privacy-focused Chrome extension by [Labratorium.com](https://labratorium.com) that helps you optimize your AI prompts for better results. Transform your basic prompts into well-structured, effective instructions while keeping your data completely private.
 
 ## 🔒 Privacy First
 
 This extension is designed with privacy as the core principle:
 - **No Data Collection**: Labratorium doesn't see, store, or track your prompts
-- **Your API Key**: Uses your own Anthropic API key stored locally in your browser
-- **Direct Communication**: Your prompts go directly from your browser to Anthropic's servers
+- **Your API Key**: Uses your own API key stored locally in your browser
+- **Direct Communication**: Your prompts go directly from your browser to AI provider servers
 - **No Third-party Servers**: No intermediate servers or logging systems
 - **Local Storage Only**: All settings and API keys stored in your browser's secure storage
 
-## Features
+## ✨ Features
 
-### 🚀 Core Functionality
-- **Prompt Optimization**: Enhance clarity, specificity, and structure of your prompts
-- **Multiple Optimization Styles**: Choose from comprehensive, quick, structured, or creative enhancement
-- **Markdown Output**: Optimized prompts are formatted in markdown for easy copy-pasting
-- **Multiple Claude Models**: Support for Claude 3.5 Sonnet, Haiku, and Opus
+### 🚀 Multi-Provider Support (New in v3.0)
+- **Anthropic (Claude)**: Claude 3.5 Haiku, Sonnet, and Opus models
+- **OpenAI (GPT)**: GPT-4o Mini, GPT-4o, and GPT-4 Turbo models  
+- **Google (Gemini)**: Gemini 2.5 Flash-Lite, Flash, and Pro models
 
-### 📝 Smart Text Selection
-- **Right-click Context Menu**: Optimize any selected text on web pages
-- **Floating Optimize Button**: Appears when you select text (10+ characters)
-- **Modal Results View**: Compare original vs optimized prompts side-by-side
+### 🎯 Smart Prompt Optimization
+- **Multiple Optimization Styles**: Comprehensive, Quick, Structured, or Creative enhancement
+- **Markdown Output**: Optimized prompts formatted for easy copy-pasting
+- **Real-time Processing**: Fast optimization with live feedback
+- **Template Library**: Quick-start templates for common use cases
 
-### ⚡ Quick Templates
-- **Creative Writing**: Template for creative content generation
-- **Data Analysis**: Template for analytical tasks
-- **Technical Writing**: Template for documentation and explanations  
-- **Code Generation**: Template for programming tasks
+### ⚡ Quick Action Templates
+- **🎨 Creative**: Template for creative content generation
+- **📊 Analysis**: Template for analytical and research tasks
+- **✍️ Writing**: Template for articles, blogs, and documentation
+- **💻 Coding**: Template for programming and technical tasks
 
-### 🎯 Optimization Types
-- **General Improvement**: Overall enhancement of prompt quality
-- **Clarity & Specificity**: Make prompts clearer and more specific
-- **Creative Enhancement**: Boost creative and innovative responses
-- **Technical Precision**: Optimize for technical accuracy
-- **Make Concise**: Streamline verbose prompts
-- **Add More Detail**: Expand minimal prompts
+### 🎛️ Advanced Options
+- **Optimization Types**: General, Clarity, Creativity, Technical, Concise, or Detailed
+- **Provider Selection**: Choose your preferred AI provider
+- **Model Selection**: Pick the best model for your needs (speed vs capability)
+- **Style Preferences**: Customize optimization approach
 
-## Installation
+## 📦 Installation
 
-### From Source Code
+### Chrome Web Store (Recommended)
+*Coming soon - Extension under review*
 
-1. **Download or Clone** this repository
-2. **Open Chrome** and navigate to `chrome://extensions/`
-3. **Enable Developer Mode** (toggle in top-right corner)
-4. **Click "Load unpacked"** and select the extension folder
-5. **Pin the extension** to your toolbar for easy access
-
-### Required Files Structure
-```
-labratorium-ai-prompt-optimizer/
-├── manifest.json
-├── popup.html
-├── popup.js
-├── background.js
-├── content.js
-├── icons/
-│   ├── icon16.png
-│   ├── icon48.png
-│   └── icon128.png
-└── README.md
+### Manual Installation (Developer Mode)
+1. **Download or clone this repository**
+```bash
+git clone https://github.com/iliasbeshimov/labratorium-ai-prompt-optimizer.git
 ```
 
-## Setup
+2. **Open Chrome Extensions page**
+   - Go to `chrome://extensions/`
+   - Enable "Developer mode" (top right toggle)
 
-### 1. Get Claude API Key
+3. **Load the extension**
+   - Click "Load unpacked"
+   - Select the downloaded folder
+   - Extension will appear in your toolbar
+
+## ⚙️ Setup
+
+### 1. Get Your API Key
+
+Choose your preferred provider:
+
+**Anthropic (Claude)**
 1. Visit [Anthropic Console](https://console.anthropic.com/)
-2. Create an account or sign in
-3. Navigate to API Keys section
-4. Generate a new API key
-5. Copy the key (starts with `sk-ant-`)
+2. Create account and generate API key (starts with `sk-ant-`)
+
+**OpenAI (GPT)** 
+1. Visit [OpenAI Platform](https://platform.openai.com/api-keys)
+2. Create account and generate API key (starts with `sk-`)
+
+**Google (Gemini)**
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Create account and generate API key
 
 ### 2. Configure Extension
 1. **Click the extension icon** in your Chrome toolbar
 2. **Go to Settings tab**
-3. **Paste your API key** in the API Key field
-4. **Select your preferred Claude model**:
-   - **Claude 3.5 Sonnet** (Latest, balanced performance)
-   - **Claude 3.5 Haiku** (Fastest, cost-effective)
-   - **Claude 3 Opus** (Most capable, highest quality)
-5. **Choose optimization style**:
-   - **Comprehensive Analysis** (detailed improvements)
-   - **Quick Improvements** (fast enhancements)
-   - **Structured Approach** (organized formatting)
-   - **Creative Enhancement** (boost creativity)
-6. **Click "Save Settings"**
-7. **Test API connection** to verify setup
+3. **Select AI Provider** (Anthropic, OpenAI, or Google)
+4. **Paste your API key** in the API Key field
+5. **Select your preferred model**:
+   - **Fastest**: Haiku, GPT-4o Mini, or Gemini Flash-Lite
+   - **Latest**: Sonnet, GPT-4o, or Gemini Flash  
+   - **Most Capable**: Opus, GPT-4 Turbo, or Gemini Pro
+6. **Choose optimization style**:
+   - **Comprehensive Analysis**: Detailed improvements with examples
+   - **Quick Improvements**: Fast enhancements 
+   - **Structured Approach**: Organized formatting
+   - **Creative Enhancement**: Boost innovative responses
+7. **Click "Save Settings"**
+8. **Click "Test API Connection"** to verify setup
 
-## Usage
+## 🚀 Usage
 
-### Method 1: Extension Popup
+### Extension Popup Method
 1. **Click the extension icon**
-2. **Select optimization type** from dropdown
-3. **Choose a quick template** (optional) or write your own prompt
-4. **Paste/type your prompt** in the text area
-5. **Click "Optimize Prompt"**
-6. **Copy the optimized result** in markdown format
+2. **Enter your prompt** in the text area
+3. **Optional**: Click "Advanced Options" to:
+   - Choose specific optimization type
+   - Use quick action templates
+4. **Click "Optimize Prompt"**
+5. **Copy the optimized result**
 
-### Method 2: Text Selection (Any Website)
-1. **Select any text** on a webpage (10+ characters)
-2. **Choose one of these options**:
-   - **Right-click** → "Optimize with Labratorium"
-   - **Click the floating optimize button** that appears
-3. **View results** in the modal popup
-4. **Copy optimized prompt** to clipboard
+### Example Transformation
 
-### Keyboard Shortcuts
-- **Ctrl/Cmd + Enter**: Optimize prompt (when popup is open)
-- **Escape**: Close messages and modals
-
-## Example Usage
-
-### Before Optimization:
+**Original Prompt:**
 ```
 Write a blog post about AI
 ```
 
-### After Optimization:
-```markdown
-# Blog Post: Artificial Intelligence
+**Optimized Prompt (Comprehensive Analysis):**
+```
+# Blog Post: The Impact of Artificial Intelligence
 
-Write a comprehensive, engaging blog post about artificial intelligence that:
+Write a comprehensive 1,500-word blog post about artificial intelligence for a general business audience. Structure the content as follows:
 
-## Content Requirements:
-- **Target Audience**: General readers with basic tech knowledge
-- **Length**: 1,500-2,000 words
-- **Tone**: Informative yet accessible, avoiding technical jargon
-
-## Structure:
-1. **Introduction**: Hook readers with current AI impact
+1. **Introduction**: Hook readers with current AI impact statistics
 2. **Main Sections**:
-   - What is AI and how it works (simplified)
-   - Current real-world applications
-   - Benefits and challenges
-   - Future implications
-3. **Conclusion**: Balanced perspective on AI's role in society
+   - What is AI and how it works (simplified explanations)
+   - Current real-world applications across industries
+   - Benefits and challenges for businesses
+   - Practical implementation strategies
+3. **Conclusion**: Balanced perspective on AI's future role
 
-## Style Guidelines:
-- Use concrete examples and case studies
-- Include relevant statistics or recent developments
-- Break content into digestible sections with headers
-- End with thought-provoking questions for reader engagement
-
-## Output Format:
-Provide the complete blog post with proper markdown formatting, including headers, bullet points, and emphasis where appropriate.
+**Requirements:**
+- Use conversational yet professional tone
+- Include 2-3 relevant examples or case studies  
+- Add actionable takeaways for business leaders
+- Keep technical jargon minimal with clear explanations
+- Optimize for 8-minute reading time
 ```
 
-## API Usage & Costs
+## 💰 Pricing & Usage
 
-### Rate Limits
-- Uses Anthropic's standard API rate limits
-- Extension includes error handling for rate limit responses
-- Failed requests can be retried
+### API Costs (Approximate)
+- **Anthropic**: $0.001-$0.01 per optimization
+- **OpenAI**: $0.002-$0.02 per optimization  
+- **Google**: $0.0005-$0.005 per optimization
 
-### Cost Optimization
-- **Choose appropriate models**: Haiku for quick tasks, Sonnet for balanced needs, Opus for complex optimization
-- **Optimize prompt length**: Longer prompts cost more tokens
-- **Use quick optimization style** for simple improvements
+*Costs vary by model and prompt length. You pay your provider directly.*
 
-### Token Usage
-- **Input**: Your original prompt + optimization instructions (~200-500 tokens)
-- **Output**: Optimized prompt (~300-1000 tokens depending on complexity)
-- **Estimated cost**: $0.001-$0.01 per optimization (varies by model)
+### Best Practices for Cost Efficiency
+- Use faster models (Haiku, GPT-4o Mini, Gemini Flash-Lite) for simple optimizations
+- Choose "Quick Improvements" style for basic enhancements
+- Reserve premium models (Opus, GPT-4 Turbo, Gemini Pro) for complex tasks
 
-## Troubleshooting
+## 🔧 Troubleshooting
 
-### Common Issues
-
-**❌ "API key not configured"**
-- Go to Settings tab and enter your Claude API key
-- Make sure the key starts with `sk-ant-`
-- Click "Test API Connection" to verify
+**❌ "Please configure your API key"**
+- Go to Settings tab and enter your API key
+- Make sure you selected the correct provider
 
 **❌ "API test failed"** 
-- Check your internet connection
-- Verify API key is correct and active
-- Ensure you have API credits in your Anthropic account
-- Try a different Claude model
+- Verify your API key is correct and active
+- Ensure you have API credits in your account
+- Try a different model
 
 **❌ "Optimization failed"**
-- Check if your prompt is too long (>4000 characters)
-- Verify API key hasn't expired
+- Check your internet connection
 - Try again with shorter prompt
-- Switch to a different optimization style
+- Switch to a different model or provider
 
-**❌ Floating button not appearing**
-- Make sure you're selecting 10+ characters of text
-- Try refreshing the page
-- Check if the website blocks extension content scripts
+**❌ Extension not appearing**
+- Refresh the extensions page (chrome://extensions/)
+- Make sure "Developer mode" is enabled
+- Try reloading the extension
 
 **❌ Copy to clipboard failed**
-- Use manual copy (Ctrl+C) from the result text
-- Check browser clipboard permissions
-- Try using the copy button in the popup instead
+- Click directly on the result text to select it
+- Use Ctrl+C (Cmd+C on Mac) to copy manually
+- Check browser permissions for clipboard access
 
-### Getting Help
-
-1. **Check browser console** for error messages (F12 → Console)
-2. **Verify extension permissions** in Chrome settings
-3. **Try reloading the extension** in chrome://extensions/
-4. **Test with a simple prompt** to isolate issues
-
-## Privacy & Security
+## 🛡️ Security & Privacy
 
 ### Data Handling
-- **API Key Storage**: Stored locally in Chrome's secure storage
-- **No Data Collection**: Extension doesn't collect or store personal data
-- **Direct API Communication**: Prompts sent directly to Anthropic's API
-- **No Third-party Servers**: No intermediate servers or logging
+- **API Key Storage**: Stored locally in Chrome's secure storage only
+- **Zero Data Collection**: Labratorium.com never sees your prompts or API usage
+- **Direct API Communication**: Prompts sent directly to your chosen provider's servers
+- **No Third-party Servers**: No intermediate logging or processing systems
+- **Local Processing**: All requests processed in your browser
 
 ### Permissions Explained
-- **storage**: Save your API key and settings locally
-- **activeTab**: Access selected text on current webpage
-- **host_permissions**: Make API calls to Anthropic's servers
+- **storage**: Save your API key and settings locally in your browser
+- **activeTab**: Required for Chrome extension functionality
+- **host_permissions**: Make API calls to AI provider servers
 
-## Development
+## 🔄 Development
 
-### Building from Source
+### Local Development
 ```bash
 # Clone repository
-git clone <repository-url>
-cd claude-prompt-optimizer
+git clone https://github.com/iliasbeshimov/labratorium-ai-prompt-optimizer.git
+cd labratorium-ai-prompt-optimizer
 
 # Load in Chrome
-# Go to chrome://extensions/
-# Enable Developer mode
-# Click "Load unpacked" and select this folder
+# 1. Go to chrome://extensions/  
+# 2. Enable Developer mode
+# 3. Click "Load unpacked" and select this folder
 ```
 
 ### Customization
-- **Modify optimization prompts** in `popup.js` and `background.js`
-- **Add new templates** in the `insertTemplate` function
-- **Customize UI styling** in `popup.html` styles
 - **Add new optimization types** by extending the dropdown options
+- **Modify templates** in popup.js templateTypes object
+- **Customize styling** in the embedded CSS within popup.html
+- **Add new providers** by extending the providerModels configuration
 
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## License
+## 📄 License
 
 MIT License - feel free to modify and distribute.
 
-## Changelog
+## 🤝 Contributing
 
-### Version 1.0.0
-- Initial release
-- Claude API integration
-- Multiple optimization styles
-- Text selection optimization
-- Quick templates
-- Markdown output formatting
-- API key management
-- Error handling and user feedback
+Contributions welcome! Please feel free to submit pull requests or open issues for:
+- Bug fixes and improvements
+- New AI provider integrations  
+- Additional optimization templates
+- UI/UX enhancements
+
+## 📊 Version History
+
+- **v3.0** (Latest Stable): Multi-provider support, enhanced UX, improved security
+- **v2.x**: Advanced optimization features and templates
+- **v1.x**: Initial Claude-only implementation
+
+---
+
+**Built with ❤️ by [Labratorium.com](https://labratorium.com)**
