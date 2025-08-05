@@ -1,5 +1,4 @@
 // Labratorium AI Prompt Optimizer - Popup Script
-// Clean, readable version replacing obfuscated code
 
 // DOM Elements
 const optimizeButton = document.getElementById('optimize-btn');
