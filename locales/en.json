@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Labratorium AI Prompt Optimizer",
+    "description": "Privacy-focused prompt enhancement"
+  },
+  "tabs": {
+    "optimize": "Optimize",
+    "settings": "Settings"
+  },
+  "optimize": {
+    "yourPrompt": "Your Prompt:",
+    "placeholder": "Enter your prompt here to optimize it...",
+    "advancedOptions": "Advanced Options",
+    "optimizeButton": "Optimize Prompt",
+    "loading": "🧪 Labratorium AI is optimizing your prompt...",
+    "resultTitle": "Optimized Prompt:",
+    "copyButton": "Copy",
+    "optimizationType": "Optimization Type:"
+  },
+  "settings": {
+    "configHeader": "🔧 Configuration",
+    "configSubtext": "Configure your AI provider settings below.",
+    "aiProvider": "AI Provider:",
+    "apiKey": "API Key:",
+    "apiKeyPlaceholder": "Enter your API key...",
+    "model": "Model:",
+    "optimizationStyle": "Optimization Style:",
+    "language": "Language:",
+    "saveSettings": "Save Settings",
+    "testApi": "Test API Connection",
+    "version": "Version 4.0 (Latest Stable)"
+  },
+  "messages": {
+    "enterApiKey": "Please enter an API key",
+    "settingsSaved": "Settings saved successfully!",
+    "settingsFailed": "Failed to save settings",
+    "apiKeyFirst": "Please enter an API key first",
+    "apiTesting": "Testing...",
+    "apiSuccess": "API connection successful!",
+    "apiTestFailed": "API test failed: {error}",
+    "enterPrompt": "Please enter a prompt to optimize",
+    "configureApiKey": "Please configure your API key in settings",
+    "optimizationFailed": "Optimization failed: {error}",
+    "copied": "Copied!",
+    "copyFailed": "Failed to copy to clipboard"
+  },
+  "templates": {
+    "creative": "Create a [type of content] that [specific goal]. The output should be [desired characteristics] and include [specific elements].",
+    "analysis": "Analyze [data/topic] and provide insights about [specific aspects]. Focus on [key areas] and present findings in [desired format].",
+    "writing": "Write a [type of content] about [topic] for [audience]. The tone should be [tone] and include [specific requirements].",
+    "coding": "Write [language] code that [functionality]. The code should [requirements] and follow [standards/patterns]."
+  },
+  "quickActions": {
+    "creative": "🎨 Creative",
+    "analysis": "📊 Analysis", 
+    "writing": "✍️ Writing",
+    "coding": "💻 Coding"
+  },
+  "models": {
+    "fastest": "Fastest",
+    "latest": "Latest",
+    "mostCapable": "Most Capable"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "Comprehensive Analysis",
+    "quick": "Quick Improvements", 
+    "structured": "Structured Approach",
+    "creative": "Creative Enhancement"
+  },
+  "optimizationTypes": {
+    "general": "General Improvement",
+    "clarity": "Clarity & Specificity",
+    "creativity": "Creative Enhancement",
+    "technical": "Technical Precision",
+    "concise": "Make Concise",
+    "detailed": "Add More Detail"
+  },
+  "privacy": {
+    "notice": "🔒 Privacy Notice: This extension runs entirely in your browser. Your API key is stored locally and your prompts are sent directly to your chosen provider's servers. Labratorium.com has no access to your data."
+  },
+  "apiKeyHelp": {
+    "anthropic": "Get your API key from Anthropic Console",
+    "openai": "Get your API key from OpenAI Platform", 
+    "google": "Get your API key from Google AI Studio"
+  }
+}

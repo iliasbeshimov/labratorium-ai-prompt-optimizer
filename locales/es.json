@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Optimizador de Prompts IA de Labratorium",
+    "description": "Mejora de prompts enfocada en privacidad"
+  },
+  "tabs": {
+    "optimize": "Optimizar",
+    "settings": "Configuración"
+  },
+  "optimize": {
+    "yourPrompt": "Tu Prompt:",
+    "placeholder": "Ingresa tu prompt aquí para optimizarlo...",
+    "advancedOptions": "Opciones Avanzadas",
+    "optimizeButton": "Optimizar Prompt",
+    "loading": "🧪 Labratorium IA está optimizando tu prompt...",
+    "resultTitle": "Prompt Optimizado:",
+    "copyButton": "Copiar",
+    "optimizationType": "Tipo de Optimización:"
+  },
+  "settings": {
+    "configHeader": "🔧 Configuración",
+    "configSubtext": "Configura los ajustes de tu proveedor de IA a continuación.",
+    "aiProvider": "Proveedor de IA:",
+    "apiKey": "Clave API:",
+    "apiKeyPlaceholder": "Ingresa tu clave API...",
+    "model": "Modelo:",
+    "optimizationStyle": "Estilo de Optimización:",
+    "language": "Idioma:",
+    "saveSettings": "Guardar Configuración",
+    "testApi": "Probar Conexión API",
+    "version": "Versión 4.0 (Última Estable)"
+  },
+  "messages": {
+    "enterApiKey": "Por favor ingresa una clave API",
+    "settingsSaved": "¡Configuración guardada exitosamente!",
+    "settingsFailed": "Error al guardar configuración",
+    "apiKeyFirst": "Por favor ingresa una clave API primero",
+    "apiTesting": "Probando...",
+    "apiSuccess": "¡Conexión API exitosa!",
+    "apiTestFailed": "Prueba API falló: {error}",
+    "enterPrompt": "Por favor ingresa un prompt para optimizar",
+    "configureApiKey": "Por favor configura tu clave API en ajustes",
+    "optimizationFailed": "Optimización falló: {error}",
+    "copied": "¡Copiado!",
+    "copyFailed": "Error al copiar al portapapeles"
+  },
+  "templates": {
+    "creative": "Crea un [tipo de contenido] que [objetivo específico]. El resultado debe ser [características deseadas] e incluir [elementos específicos].",
+    "analysis": "Analiza [datos/tema] y proporciona insights sobre [aspectos específicos]. Enfócate en [áreas clave] y presenta los hallazgos en [formato deseado].",
+    "writing": "Escribe un [tipo de contenido] sobre [tema] para [audiencia]. El tono debe ser [tono] e incluir [requisitos específicos].",
+    "coding": "Escribe código [lenguaje] que [funcionalidad]. El código debe [requisitos] y seguir [estándares/patrones]."
+  },
+  "quickActions": {
+    "creative": "🎨 Creativo",
+    "analysis": "📊 Análisis",
+    "writing": "✍️ Escritura",
+    "coding": "💻 Programación"
+  },
+  "models": {
+    "fastest": "Más Rápido",
+    "latest": "Más Reciente",
+    "mostCapable": "Más Potente"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "Análisis Integral",
+    "quick": "Mejoras Rápidas",
+    "structured": "Enfoque Estructurado",
+    "creative": "Mejora Creativa"
+  },
+  "optimizationTypes": {
+    "general": "Mejora General",
+    "clarity": "Claridad y Especificidad",
+    "creativity": "Mejora Creativa",
+    "technical": "Precisión Técnica",
+    "concise": "Hacer Conciso",
+    "detailed": "Agregar Más Detalle"
+  },
+  "privacy": {
+    "notice": "🔒 Aviso de Privacidad: Esta extensión funciona completamente en tu navegador. Tu clave API se almacena localmente y tus prompts se envían directamente a los servidores del proveedor elegido. Labratorium.com no tiene acceso a tus datos."
+  },
+  "apiKeyHelp": {
+    "anthropic": "Obtén tu clave API desde la Consola de Anthropic",
+    "openai": "Obtén tu clave API desde la Plataforma OpenAI",
+    "google": "Obtén tu clave API desde Google AI Studio"
+  }
+}

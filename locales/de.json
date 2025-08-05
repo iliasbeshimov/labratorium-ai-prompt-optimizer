@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Labratorium KI Prompt-Optimierer",
+    "description": "Datenschutzorientierte Prompt-Verbesserung"
+  },
+  "tabs": {
+    "optimize": "Optimieren",
+    "settings": "Einstellungen"
+  },
+  "optimize": {
+    "yourPrompt": "Ihr Prompt:",
+    "placeholder": "Geben Sie hier Ihren Prompt zur Optimierung ein...",
+    "advancedOptions": "Erweiterte Optionen",
+    "optimizeButton": "Prompt Optimieren",
+    "loading": "🧪 Labratorium KI optimiert Ihren Prompt...",
+    "resultTitle": "Optimierter Prompt:",
+    "copyButton": "Kopieren",
+    "optimizationType": "Optimierungstyp:"
+  },
+  "settings": {
+    "configHeader": "🔧 Konfiguration",
+    "configSubtext": "Konfigurieren Sie unten die Einstellungen Ihres KI-Anbieters.",
+    "aiProvider": "KI-Anbieter:",
+    "apiKey": "API-Schlüssel:",
+    "apiKeyPlaceholder": "Geben Sie Ihren API-Schlüssel ein...",
+    "model": "Modell:",
+    "optimizationStyle": "Optimierungsstil:",
+    "language": "Sprache:",
+    "saveSettings": "Einstellungen Speichern",
+    "testApi": "API-Verbindung Testen",
+    "version": "Version 4.0 (Neueste Stabile)"
+  },
+  "messages": {
+    "enterApiKey": "Bitte geben Sie einen API-Schlüssel ein",
+    "settingsSaved": "Einstellungen erfolgreich gespeichert!",
+    "settingsFailed": "Fehler beim Speichern der Einstellungen",
+    "apiKeyFirst": "Bitte geben Sie zuerst einen API-Schlüssel ein",
+    "apiTesting": "Teste...",
+    "apiSuccess": "API-Verbindung erfolgreich!",
+    "apiTestFailed": "API-Test fehlgeschlagen: {error}",
+    "enterPrompt": "Bitte geben Sie einen Prompt zur Optimierung ein",
+    "configureApiKey": "Bitte konfigurieren Sie Ihren API-Schlüssel in den Einstellungen",
+    "optimizationFailed": "Optimierung fehlgeschlagen: {error}",
+    "copied": "Kopiert!",
+    "copyFailed": "Fehler beim Kopieren in die Zwischenablage"
+  },
+  "templates": {
+    "creative": "Erstellen Sie einen [Inhaltstyp], der [spezifisches Ziel] erreicht. Das Ergebnis sollte [gewünschte Eigenschaften] haben und [spezifische Elemente] enthalten.",
+    "analysis": "Analysieren Sie [Daten/Thema] und liefern Sie Erkenntnisse über [spezifische Aspekte]. Konzentrieren Sie sich auf [Schlüsselbereiche] und präsentieren Sie die Ergebnisse in [gewünschtem Format].",
+    "writing": "Schreiben Sie einen [Inhaltstyp] über [Thema] für [Zielgruppe]. Der Ton sollte [Ton] sein und [spezifische Anforderungen] enthalten.",
+    "coding": "Schreiben Sie [Sprache] Code, der [Funktionalität] implementiert. Der Code sollte [Anforderungen] erfüllen und [Standards/Muster] befolgen."
+  },
+  "quickActions": {
+    "creative": "🎨 Kreativ",
+    "analysis": "📊 Analyse",
+    "writing": "✍️ Schreiben",
+    "coding": "💻 Programmierung"
+  },
+  "models": {
+    "fastest": "Schnellster",
+    "latest": "Neuester",
+    "mostCapable": "Leistungsstärkster"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "Umfassende Analyse",
+    "quick": "Schnelle Verbesserungen",
+    "structured": "Strukturierter Ansatz",
+    "creative": "Kreative Verbesserung"
+  },
+  "optimizationTypes": {
+    "general": "Allgemeine Verbesserung",
+    "clarity": "Klarheit & Spezifität",
+    "creativity": "Kreative Verbesserung",
+    "technical": "Technische Präzision",
+    "concise": "Prägnanter Machen",
+    "detailed": "Mehr Details Hinzufügen"
+  },
+  "privacy": {
+    "notice": "🔒 Datenschutzhinweis: Diese Erweiterung läuft vollständig in Ihrem Browser. Ihr API-Schlüssel wird lokal gespeichert und Ihre Prompts werden direkt an die Server Ihres gewählten Anbieters gesendet. Labratorium.com hat keinen Zugriff auf Ihre Daten."
+  },
+  "apiKeyHelp": {
+    "anthropic": "Holen Sie sich Ihren API-Schlüssel von der Anthropic-Konsole",
+    "openai": "Holen Sie sich Ihren API-Schlüssel von der OpenAI-Plattform",
+    "google": "Holen Sie sich Ihren API-Schlüssel von Google AI Studio"
+  }
+}

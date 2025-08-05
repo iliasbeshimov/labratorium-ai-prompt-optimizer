@@ -1,4 +1,4 @@
-// Labratorium AI Prompt Optimizer - Popup Script
+// Labratorium AI Prompt Optimizer - Popup Script with i18n Support
 
 // DOM Elements
 const optimizeButton = document.getElementById('optimize-btn');
@@ -17,6 +17,7 @@ const testApiButton = document.getElementById('test-api');
 const modelSelection = document.getElementById('model-selection');
 const contextStyleSelection = document.getElementById('context-style');
 const providerSelection = document.getElementById('provider-selection');
+const languageSelection = document.getElementById('language-selection');
 const apiKeyHelp = document.getElementById('api-key-help');
 const apiKeyLink = document.getElementById('api-key-link');
 
@@ -24,59 +25,198 @@ const apiKeyLink = document.getElementById('api-key-link');
 const settingsError = document.getElementById('settings-error');
 const settingsSuccess = document.getElementById('settings-success');
 
-// Provider model configurations
+// Provider model configurations (localized labels will be applied dynamically)
 const providerModels = {
     anthropic: [
-        { value: 'claude-3-5-haiku-20241022', label: 'Claude 3.5 Haiku (Fastest)' },
-        { value: 'claude-3-5-sonnet-20241022', label: 'Claude 3.5 Sonnet (Latest)' },
-        { value: 'claude-3-opus-20240229', label: 'Claude 3 Opus (Most Capable)' }
+        { value: 'claude-3-5-haiku-20241022', labelKey: 'models.fastest', baseLabel: 'Claude 3.5 Haiku' },
+        { value: 'claude-3-5-sonnet-20241022', labelKey: 'models.latest', baseLabel: 'Claude 3.5 Sonnet' },
+        { value: 'claude-3-opus-20240229', labelKey: 'models.mostCapable', baseLabel: 'Claude 3 Opus' }
     ],
     openai: [
-        { value: 'gpt-4o-mini', label: 'GPT-4o Mini (Fastest)' },
-        { value: 'gpt-4o', label: 'GPT-4o (Latest)' },
-        { value: 'gpt-4-turbo', label: 'GPT-4 Turbo (Most Capable)' }
+        { value: 'gpt-4o-mini', labelKey: 'models.fastest', baseLabel: 'GPT-4o Mini' },
+        { value: 'gpt-4o', labelKey: 'models.latest', baseLabel: 'GPT-4o' },
+        { value: 'gpt-4-turbo', labelKey: 'models.mostCapable', baseLabel: 'GPT-4 Turbo' }
     ],
     google: [
-        { value: 'gemini-2.5-flash-lite', label: 'Gemini 2.5 Flash-Lite (Fastest)' },
-        { value: 'gemini-2.5-flash', label: 'Gemini 2.5 Flash (Latest)' },
-        { value: 'gemini-2.5-pro', label: 'Gemini 2.5 Pro (Most Capable)' }
+        { value: 'gemini-2.5-flash-lite', labelKey: 'models.fastest', baseLabel: 'Gemini 2.5 Flash-Lite' },
+        { value: 'gemini-2.5-flash', labelKey: 'models.latest', baseLabel: 'Gemini 2.5 Flash' },
+        { value: 'gemini-2.5-pro', labelKey: 'models.mostCapable', baseLabel: 'Gemini 2.5 Pro' }
     ]
 };
 
 // Provider information for help links
 const providerInfo = {
     anthropic: {
-        name: 'Anthropic Console',
+        helpKey: 'apiKeyHelp.anthropic',
         url: 'https://console.anthropic.com/'
     },
     openai: {
-        name: 'OpenAI Platform',
+        helpKey: 'apiKeyHelp.openai',
         url: 'https://platform.openai.com/api-keys'
     },
     google: {
-        name: 'Google AI Studio',
+        helpKey: 'apiKeyHelp.google',
         url: 'https://aistudio.google.com/app/apikey'
     }
 };
 
 // Initialize when DOM loads
 document.addEventListener('DOMContentLoaded', async () => {
+    await initializeI18n();
     await loadSettings();
     updateProviderInfo();
 });
 
-// Template insertion function (called from HTML)
-window.insertTemplate = (templateType) => {
-    const templates = {
-        creative: "Create a [type of content] that [specific goal]. The output should be [desired characteristics] and include [specific elements].",
-        analysis: "Analyze [data/topic] and provide insights about [specific aspects]. Focus on [key areas] and present findings in [desired format].",
-        writing: "Write a [type of content] about [topic] for [audience]. The tone should be [tone] and include [specific requirements].",
-        coding: "Write [language] code that [functionality]. The code should [requirements] and follow [standards/patterns]."
-    };
+// Initialize i18n system
+async function initializeI18n() {
+    try {
+        await i18n.init();
+        await populateLanguageSelector();
+        await updateUILanguage();
+    } catch (error) {
+        console.error('Failed to initialize i18n:', error);
+    }
+}
+
+// Populate language selector dropdown
+async function populateLanguageSelector() {
+    languageSelection.innerHTML = '';
     
-    userPromptTextarea.value = templates[templateType] || '';
+    Object.entries(languages).forEach(([code, lang]) => {
+        const option = document.createElement('option');
+        option.value = code;
+        option.textContent = lang.nativeName;
+        if (code === i18n.getCurrentLanguage()) {
+            option.selected = true;
+        }
+        languageSelection.appendChild(option);
+    });
+}
+
+// Update all UI text based on current language
+async function updateUILanguage() {
+    // Apply RTL if needed
+    await applyLanguageDirection();
+    
+    // Update all elements with data-i18n attributes
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        element.textContent = i18n.t(key);
+    });
+    
+    // Update placeholders
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        const key = element.getAttribute('data-i18n-placeholder');
+        element.placeholder = i18n.t(key);
+    });
+    
+    // Update dynamic content
+    updateProviderDropdown();
+    updateModelDropdown();
+    updateStyleDropdown();
+    updateOptimizationTypeDropdown();
+    updateQuickActionButtons();
+    updateProviderInfo();
+}
+
+// Apply RTL layout if needed
+async function applyLanguageDirection() {
+    const isRTL = i18n.isRTL();
+    const htmlElement = document.documentElement;
+    const bodyElement = document.body;
+    
+    if (isRTL) {
+        htmlElement.setAttribute('dir', 'rtl');
+        htmlElement.setAttribute('lang', i18n.getCurrentLanguage());
+        bodyElement.classList.add('rtl');
+        bodyElement.setAttribute('dir', 'rtl');
+    } else {
+        htmlElement.setAttribute('dir', 'ltr');
+        htmlElement.setAttribute('lang', i18n.getCurrentLanguage());
+        bodyElement.classList.remove('rtl');
+        bodyElement.setAttribute('dir', 'ltr');
+    }
+}
+
+// Update provider dropdown
+function updateProviderDropdown() {
+    const options = providerSelection.querySelectorAll('option');
+    options.forEach(option => {
+        const key = option.getAttribute('data-i18n');
+        if (key) {
+            option.textContent = i18n.t(key);
+        }
+    });
+}
+
+// Update model dropdown with localized labels
+function updateModelDropdown() {
+    const provider = providerSelection.value;
+    const models = providerModels[provider] || providerModels.anthropic;
+    
+    modelSelection.innerHTML = '';
+    models.forEach(model => {
+        const option = document.createElement('option');
+        option.value = model.value;
+        option.textContent = `${model.baseLabel} (${i18n.t(model.labelKey)})`;
+        modelSelection.appendChild(option);
+    });
+}
+
+// Update style dropdown
+function updateStyleDropdown() {
+    const options = contextStyleSelection.querySelectorAll('option');
+    options.forEach(option => {
+        const key = option.getAttribute('data-i18n');
+        if (key) {
+            option.textContent = i18n.t(key);
+        }
+    });
+}
+
+// Update optimization type dropdown
+function updateOptimizationTypeDropdown() {
+    const optimizationType = document.getElementById('optimization-type');
+    if (optimizationType) {
+        const options = optimizationType.querySelectorAll('option');
+        options.forEach(option => {
+            const key = option.getAttribute('data-i18n');
+            if (key) {
+                option.textContent = i18n.t(key);
+            }
+        });
+    }
+}
+
+// Update quick action buttons
+function updateQuickActionButtons() {
+    document.querySelectorAll('.quick-btn').forEach(button => {
+        const key = button.getAttribute('data-i18n');
+        if (key) {
+            button.textContent = i18n.t(key);
+        }
+    });
+}
+
+// Template insertion function with localized templates
+window.insertTemplate = (templateType) => {
+    const template = i18n.t(`templates.${templateType}`);
+    userPromptTextarea.value = template;
     userPromptTextarea.focus();
 };
+
+// Language change event listener
+languageSelection.addEventListener('change', async () => {
+    const newLanguage = languageSelection.value;
+    const success = await i18n.setLanguage(newLanguage);
+    
+    if (success) {
+        await updateUILanguage();
+        showMessage(i18n.t('messages.settingsSaved'), 'success', 'settings');
+    } else {
+        showMessage('Failed to change language', 'error', 'settings');
+    }
+});
 
 // Save Settings Event Listener
 saveSettingsButton.addEventListener('click', async () => {
@@ -84,11 +224,12 @@ saveSettingsButton.addEventListener('click', async () => {
         provider: providerSelection.value,
         apiKey: apiKeyInput.value.trim(),
         model: modelSelection.value,
-        contextStyle: contextStyleSelection.value
+        contextStyle: contextStyleSelection.value,
+        language: languageSelection.value
     };
 
     if (!settings.apiKey) {
-        showMessage('Please enter an API key', 'error', 'settings');
+        showMessage(i18n.t('messages.enterApiKey'), 'error', 'settings');
         return;
     }
 
@@ -99,12 +240,12 @@ saveSettingsButton.addEventListener('click', async () => {
         });
 
         if (response.success) {
-            showMessage('Settings saved successfully!', 'success', 'settings');
+            showMessage(i18n.t('messages.settingsSaved'), 'success', 'settings');
         } else {
-            showMessage('Failed to save settings', 'error', 'settings');
+            showMessage(i18n.t('messages.settingsFailed'), 'error', 'settings');
         }
     } catch (error) {
-        showMessage('Failed to save settings: ' + error.message, 'error', 'settings');
+        showMessage(i18n.t('messages.settingsFailed') + ': ' + error.message, 'error', 'settings');
     }
 });
 
@@ -113,12 +254,12 @@ testApiButton.addEventListener('click', async () => {
     const apiKey = apiKeyInput.value.trim();
     
     if (!apiKey) {
-        showMessage('Please enter an API key first', 'error', 'settings');
+        showMessage(i18n.t('messages.apiKeyFirst'), 'error', 'settings');
         return;
     }
 
     testApiButton.disabled = true;
-    testApiButton.textContent = 'Testing...';
+    testApiButton.textContent = i18n.t('messages.apiTesting');
 
     try {
         const response = await chrome.runtime.sendMessage({
@@ -133,15 +274,15 @@ testApiButton.addEventListener('click', async () => {
         });
 
         if (response.success) {
-            showMessage('API connection successful!', 'success', 'settings');
+            showMessage(i18n.t('messages.apiSuccess'), 'success', 'settings');
         } else {
-            showMessage('API test failed: ' + response.error, 'error', 'settings');
+            showMessage(i18n.t('messages.apiTestFailed', { error: response.error }), 'error', 'settings');
         }
     } catch (error) {
-        showMessage('API test failed: ' + error.message, 'error', 'settings');
+        showMessage(i18n.t('messages.apiTestFailed', { error: error.message }), 'error', 'settings');
     } finally {
         testApiButton.disabled = false;
-        testApiButton.textContent = 'Test API Connection';
+        testApiButton.textContent = i18n.t('settings.testApi');
     }
 });
 
@@ -150,7 +291,7 @@ optimizeButton.addEventListener('click', async () => {
     const prompt = userPromptTextarea.value.trim();
     
     if (!prompt) {
-        showMessage('Please enter a prompt to optimize', 'error', 'optimize');
+        showMessage(i18n.t('messages.enterPrompt'), 'error', 'optimize');
         return;
     }
 
@@ -158,7 +299,7 @@ optimizeButton.addEventListener('click', async () => {
     const settingsResponse = await chrome.runtime.sendMessage({ action: 'getSettings' });
     
     if (!settingsResponse.success || !settingsResponse.settings.apiKey) {
-        showMessage('Please configure your API key in settings', 'error', 'optimize');
+        showMessage(i18n.t('messages.configureApiKey'), 'error', 'optimize');
         return;
     }
 
@@ -166,7 +307,7 @@ optimizeButton.addEventListener('click', async () => {
 
     try {
         optimizeButton.disabled = true;
-        optimizeButton.textContent = 'Optimizing...';
+        optimizeButton.textContent = i18n.t('messages.apiTesting');
         loadingIndicator.style.display = 'block';
         hideMessages();
 
@@ -184,13 +325,13 @@ optimizeButton.addEventListener('click', async () => {
         if (response.success) {
             displayResult(response.optimizedPrompt);
         } else {
-            showMessage('Optimization failed: ' + response.error, 'error', 'optimize');
+            showMessage(i18n.t('messages.optimizationFailed', { error: response.error }), 'error', 'optimize');
         }
     } catch (error) {
-        showMessage('Optimization failed: ' + error.message, 'error', 'optimize');
+        showMessage(i18n.t('messages.optimizationFailed', { error: error.message }), 'error', 'optimize');
     } finally {
         optimizeButton.disabled = false;
-        optimizeButton.textContent = 'Optimize Prompt';
+        optimizeButton.textContent = i18n.t('optimize.optimizeButton');
         loadingIndicator.style.display = 'none';
     }
 });
@@ -201,7 +342,7 @@ copyResultButton.addEventListener('click', async () => {
         await navigator.clipboard.writeText(resultContent.textContent);
         
         const originalText = copyResultButton.textContent;
-        copyResultButton.textContent = 'Copied!';
+        copyResultButton.textContent = i18n.t('messages.copied');
         copyResultButton.style.background = '#059669';
         
         setTimeout(() => {
@@ -209,7 +350,7 @@ copyResultButton.addEventListener('click', async () => {
             copyResultButton.style.background = '#10b981';
         }, 2000);
     } catch (error) {
-        showMessage('Failed to copy to clipboard', 'error', 'optimize');
+        showMessage(i18n.t('messages.copyFailed'), 'error', 'optimize');
     }
 });
 
@@ -249,6 +390,10 @@ async function loadSettings() {
             if (settings.contextStyle) {
                 contextStyleSelection.value = settings.contextStyle;
             }
+            if (settings.language) {
+                await i18n.setLanguage(settings.language);
+                languageSelection.value = settings.language;
+            }
             
             updateModelsForProvider(settings.provider || 'anthropic');
         }
@@ -262,8 +407,13 @@ function updateProviderInfo() {
     const provider = providerSelection.value;
     const info = providerInfo[provider];
     
-    apiKeyLink.textContent = info.name;
-    apiKeyLink.href = info.url;
+    if (info && apiKeyHelp) {
+        const helpText = apiKeyHelp.querySelector('span');
+        if (helpText) {
+            helpText.textContent = i18n.t(info.helpKey);
+        }
+        apiKeyLink.href = info.url;
+    }
     
     updateModelsForProvider(provider);
 }
@@ -276,7 +426,7 @@ function updateModelsForProvider(provider) {
     models.forEach(model => {
         const option = document.createElement('option');
         option.value = model.value;
-        option.textContent = model.label;
+        option.textContent = `${model.baseLabel} (${i18n.t(model.labelKey)})`;
         modelSelection.appendChild(option);
     });
 }

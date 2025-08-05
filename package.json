@@ -1,6 +1,6 @@
 {
   "name": "labratorium-ai-prompt-optimizer",
-  "version": "1.0.0",
+  "version": "4.0.0",
   "description": "Privacy-focused Chrome extension for optimizing AI prompts using Claude API",
   "scripts": {
     "dev": "node dev-server.js",

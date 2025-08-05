@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Labratorium AI 프롬프트 최적화기",
+    "description": "개인정보 보호 중심 프롬프트 개선"
+  },
+  "tabs": {
+    "optimize": "최적화",
+    "settings": "설정"
+  },
+  "optimize": {
+    "yourPrompt": "귀하의 프롬프트:",
+    "placeholder": "최적화할 프롬프트를 여기에 입력하세요...",
+    "advancedOptions": "고급 옵션",
+    "optimizeButton": "프롬프트 최적화",
+    "loading": "🧪 Labratorium AI가 프롬프트를 최적화하고 있습니다...",
+    "resultTitle": "최적화된 프롬프트:",
+    "copyButton": "복사",
+    "optimizationType": "최적화 유형:"
+  },
+  "settings": {
+    "configHeader": "🔧 구성",
+    "configSubtext": "아래에서 AI 제공업체 설정을 구성하세요.",
+    "aiProvider": "AI 제공업체:",
+    "apiKey": "API 키:",
+    "apiKeyPlaceholder": "API 키를 입력하세요...",
+    "model": "모델:",
+    "optimizationStyle": "최적화 스타일:",
+    "language": "언어:",
+    "saveSettings": "설정 저장",
+    "testApi": "API 연결 테스트",
+    "version": "버전 4.0 (최신 안정)"
+  },
+  "messages": {
+    "enterApiKey": "API 키를 입력해주세요",
+    "settingsSaved": "설정이 성공적으로 저장되었습니다!",
+    "settingsFailed": "설정 저장 실패",
+    "apiKeyFirst": "먼저 API 키를 입력해주세요",
+    "apiTesting": "테스트 중...",
+    "apiSuccess": "API 연결 성공!",
+    "apiTestFailed": "API 테스트 실패: {error}",
+    "enterPrompt": "최적화할 프롬프트를 입력해주세요",
+    "configureApiKey": "설정에서 API 키를 구성해주세요",
+    "optimizationFailed": "최적화 실패: {error}",
+    "copied": "복사됨!",
+    "copyFailed": "클립보드 복사 실패"
+  },
+  "templates": {
+    "creative": "[특정 목표]를 달성하는 [콘텐츠 유형]을 만드세요. 결과는 [원하는 특성]을 가져야 하며 [특정 요소]를 포함해야 합니다.",
+    "analysis": "[데이터/주제]를 분석하고 [특정 측면]에 대한 통찰을 제공하세요. [핵심 영역]에 집중하고 [원하는 형식]으로 결과를 제시하세요.",
+    "writing": "[대상]을 위해 [주제]에 대한 [콘텐츠 유형]을 작성하세요. 톤은 [톤]이어야 하며 [특정 요구사항]을 포함해야 합니다.",
+    "coding": "[기능]을 구현하는 [언어] 코드를 작성하세요. 코드는 [요구사항]을 충족하고 [표준/패턴]을 따라야 합니다."
+  },
+  "quickActions": {
+    "creative": "🎨 창의적",
+    "analysis": "📊 분석",
+    "writing": "✍️ 작성",
+    "coding": "💻 코딩"
+  },
+  "models": {
+    "fastest": "가장 빠른",
+    "latest": "최신",
+    "mostCapable": "가장 강력한"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "포괄적 분석",
+    "quick": "빠른 개선",
+    "structured": "구조화된 접근",
+    "creative": "창의적 개선"
+  },
+  "optimizationTypes": {
+    "general": "일반 개선",
+    "clarity": "명확성 및 구체성",
+    "creativity": "창의적 개선",
+    "technical": "기술적 정확성",
+    "concise": "간결하게 만들기",
+    "detailed": "세부사항 추가"
+  },
+  "privacy": {
+    "notice": "🔒 개인정보 보호 공지: 이 확장 프로그램은 브라우저 내에서만 실행됩니다. API 키는 로컬에 저장되며 프롬프트는 선택한 제공업체의 서버로 직접 전송됩니다. Labratorium.com은 귀하의 데이터에 액세스할 수 없습니다."
+  },
+  "apiKeyHelp": {
+    "anthropic": "Anthropic 콘솔에서 API 키 받기",
+    "openai": "OpenAI 플랫폼에서 API 키 받기",
+    "google": "Google AI Studio에서 API 키 받기"
+  }
+}

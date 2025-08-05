@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Labratorium AI 提示优化器",
+    "description": "注重隐私的提示增强工具"
+  },
+  "tabs": {
+    "optimize": "优化",
+    "settings": "设置"
+  },
+  "optimize": {
+    "yourPrompt": "您的提示：",
+    "placeholder": "在此输入您的提示进行优化...",
+    "advancedOptions": "高级选项",
+    "optimizeButton": "优化提示",
+    "loading": "🧪 Labratorium AI 正在优化您的提示...",
+    "resultTitle": "优化后的提示：",
+    "copyButton": "复制",
+    "optimizationType": "优化类型："
+  },
+  "settings": {
+    "configHeader": "🔧 配置",
+    "configSubtext": "在下方配置您的 AI 服务提供商设置。",
+    "aiProvider": "AI 服务提供商：",
+    "apiKey": "API 密钥：",
+    "apiKeyPlaceholder": "输入您的 API 密钥...",
+    "model": "模型：",
+    "optimizationStyle": "优化风格：",
+    "language": "语言：",
+    "saveSettings": "保存设置",
+    "testApi": "测试 API 连接",
+    "version": "版本 4.0（最新稳定版）"
+  },
+  "messages": {
+    "enterApiKey": "请输入 API 密钥",
+    "settingsSaved": "设置保存成功！",
+    "settingsFailed": "设置保存失败",
+    "apiKeyFirst": "请先输入 API 密钥",
+    "apiTesting": "测试中...",
+    "apiSuccess": "API 连接成功！",
+    "apiTestFailed": "API 测试失败：{error}",
+    "enterPrompt": "请输入要优化的提示",
+    "configureApiKey": "请在设置中配置您的 API 密钥",
+    "optimizationFailed": "优化失败：{error}",
+    "copied": "已复制！",
+    "copyFailed": "复制到剪贴板失败"
+  },
+  "templates": {
+    "creative": "创建一个[内容类型]，目标是[具体目标]。结果应该是[期望特征]并包含[具体元素]。",
+    "analysis": "分析[数据/主题]并提供关于[具体方面]的见解。专注于[关键领域]并以[期望格式]呈现结果。",
+    "writing": "为[受众]撰写关于[主题]的[内容类型]。语调应该是[语调]并包含[具体要求]。",
+    "coding": "编写[语言]代码来实现[功能]。代码应该[要求]并遵循[标准/模式]。"
+  },
+  "quickActions": {
+    "creative": "🎨 创意",
+    "analysis": "📊 分析",
+    "writing": "✍️ 写作",
+    "coding": "💻 编程"
+  },
+  "models": {
+    "fastest": "最快",
+    "latest": "最新",
+    "mostCapable": "最强大"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "全面分析",
+    "quick": "快速改进",
+    "structured": "结构化方法",
+    "creative": "创意增强"
+  },
+  "optimizationTypes": {
+    "general": "通用改进",
+    "clarity": "清晰度与具体性",
+    "creativity": "创意增强",
+    "technical": "技术精确性",
+    "concise": "精简化",
+    "detailed": "增加详细信息"
+  },
+  "privacy": {
+    "notice": "🔒 隐私声明：此扩展完全在您的浏览器中运行。您的 API 密钥存储在本地，您的提示直接发送到所选提供商的服务器。Labratorium.com 无法访问您的数据。"
+  },
+  "apiKeyHelp": {
+    "anthropic": "从 Anthropic 控制台获取您的 API 密钥",
+    "openai": "从 OpenAI 平台获取您的 API 密钥",
+    "google": "从 Google AI Studio 获取您的 API 密钥"
+  }
+}

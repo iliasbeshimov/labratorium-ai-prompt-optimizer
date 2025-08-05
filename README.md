@@ -13,7 +13,13 @@ This extension is designed with privacy as the core principle:
 
 ## ✨ Features
 
-### 🚀 Multi-Provider Support (New in v3.0)
+### 🌍 International Localization (New in v4.0)
+- **10 Languages Supported**: English, Arabic, Spanish, French, Chinese (Simplified), German, Portuguese, Japanese, Korean, Russian
+- **RTL Support**: Full right-to-left text flow for Arabic
+- **Dynamic Language Switching**: Change language instantly without reload
+- **Culturally Adapted**: Templates and messaging localized for each region
+
+### 🚀 Multi-Provider Support
 - **Anthropic (Claude)**: Claude 3.5 Haiku, Sonnet, and Opus models
 - **OpenAI (GPT)**: GPT-4o Mini, GPT-4o, and GPT-4 Turbo models  
 - **Google (Gemini)**: Gemini 2.5 Flash-Lite, Flash, and Pro models
@@ -88,8 +94,12 @@ Choose your preferred provider:
    - **Quick Improvements**: Fast enhancements 
    - **Structured Approach**: Organized formatting
    - **Creative Enhancement**: Boost innovative responses
-7. **Click "Save Settings"**
-8. **Click "Test API Connection"** to verify setup
+7. **Select your language** (v4.0):
+   - **Available**: English, Arabic, Spanish, French, Chinese (Simplified), German, Portuguese, Japanese, Korean, Russian
+   - **Auto-detection**: Extension detects your browser language automatically
+   - **RTL Support**: Arabic displays with proper right-to-left text flow
+8. **Click "Save Settings"**
+9. **Click "Test API Connection"** to verify setup
 
 ## 🚀 Usage
 
@@ -219,7 +229,8 @@ Contributions welcome! Please feel free to submit pull requests or open issues f
 
 ## 📊 Version History
 
-- **v3.0** (Latest Stable): Multi-provider support, enhanced UX, improved security
+- **v4.0** (Latest Stable): International localization (10 languages), RTL support for Arabic, dynamic language switching
+- **v3.0**: Multi-provider support, enhanced UX, improved security
 - **v2.x**: Advanced optimization features and templates
 - **v1.x**: Initial Claude-only implementation
 

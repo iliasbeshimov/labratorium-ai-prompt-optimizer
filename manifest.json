@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Labratorium AI Prompt Optimizer",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Privacy-focused prompt optimization using Claude AI - by Labratorium.com",
   
   "content_security_policy": {

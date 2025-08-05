@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Labratorium AI プロンプトオプティマイザー",
+    "description": "プライバシー重視のプロンプト最適化"
+  },
+  "tabs": {
+    "optimize": "最適化",
+    "settings": "設定"
+  },
+  "optimize": {
+    "yourPrompt": "あなたのプロンプト：",
+    "placeholder": "最適化するプロンプトをここに入力してください...",
+    "advancedOptions": "高度なオプション",
+    "optimizeButton": "プロンプトを最適化",
+    "loading": "🧪 Labratorium AI があなたのプロンプトを最適化しています...",
+    "resultTitle": "最適化されたプロンプト：",
+    "copyButton": "コピー",
+    "optimizationType": "最適化タイプ："
+  },
+  "settings": {
+    "configHeader": "🔧 設定",
+    "configSubtext": "以下でAIプロバイダーの設定を構成してください。",
+    "aiProvider": "AIプロバイダー：",
+    "apiKey": "APIキー：",
+    "apiKeyPlaceholder": "APIキーを入力してください...",
+    "model": "モデル：",
+    "optimizationStyle": "最適化スタイル：",
+    "language": "言語：",
+    "saveSettings": "設定を保存",
+    "testApi": "API接続をテスト",
+    "version": "バージョン 4.0（最新安定版）"
+  },
+  "messages": {
+    "enterApiKey": "APIキーを入力してください",
+    "settingsSaved": "設定が正常に保存されました！",
+    "settingsFailed": "設定の保存に失敗しました",
+    "apiKeyFirst": "まずAPIキーを入力してください",
+    "apiTesting": "テスト中...",
+    "apiSuccess": "API接続成功！",
+    "apiTestFailed": "APIテストに失敗しました：{error}",
+    "enterPrompt": "最適化するプロンプトを入力してください",
+    "configureApiKey": "設定でAPIキーを構成してください",
+    "optimizationFailed": "最適化に失敗しました：{error}",
+    "copied": "コピーしました！",
+    "copyFailed": "クリップボードへのコピーに失敗しました"
+  },
+  "templates": {
+    "creative": "[特定の目標]を達成する[コンテンツタイプ]を作成してください。結果は[望ましい特徴]を持ち、[特定の要素]を含む必要があります。",
+    "analysis": "[データ/トピック]を分析し、[特定の側面]に関する洞察を提供してください。[重要な領域]に焦点を当て、[望ましい形式]で結果を提示してください。",
+    "writing": "[対象読者]向けに[トピック]について[コンテンツタイプ]を書いてください。トーンは[トーン]で、[特定の要件]を含む必要があります。",
+    "coding": "[機能]を実装する[言語]コードを書いてください。コードは[要件]を満たし、[標準/パターン]に従う必要があります。"
+  },
+  "quickActions": {
+    "creative": "🎨 クリエイティブ",
+    "analysis": "📊 分析",
+    "writing": "✍️ 執筆",
+    "coding": "💻 コーディング"
+  },
+  "models": {
+    "fastest": "最速",
+    "latest": "最新",
+    "mostCapable": "最高性能"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "包括的分析",
+    "quick": "クイック改善",
+    "structured": "構造化アプローチ",
+    "creative": "クリエイティブ改善"
+  },
+  "optimizationTypes": {
+    "general": "一般的改善",
+    "clarity": "明確性と具体性",
+    "creativity": "クリエイティブ改善",
+    "technical": "技術的精密性",
+    "concise": "簡潔にする",
+    "detailed": "詳細を追加"
+  },
+  "privacy": {
+    "notice": "🔒 プライバシー通知：この拡張機能は完全にブラウザ内で動作します。APIキーはローカルに保存され、プロンプトは選択したプロバイダーのサーバーに直接送信されます。Labratorium.comはあなたのデータにアクセスできません。"
+  },
+  "apiKeyHelp": {
+    "anthropic": "Anthropic コンソールからAPIキーを取得",
+    "openai": "OpenAI プラットフォームからAPIキーを取得",
+    "google": "Google AI Studio からAPIキーを取得"
+  }
+}

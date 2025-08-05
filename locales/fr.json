@@ -1,0 +1,91 @@
+{
+  "extension": {
+    "name": "🧪 Optimiseur de Prompts IA Labratorium",
+    "description": "Amélioration de prompts axée sur la confidentialité"
+  },
+  "tabs": {
+    "optimize": "Optimiser",
+    "settings": "Paramètres"
+  },
+  "optimize": {
+    "yourPrompt": "Votre Prompt :",
+    "placeholder": "Entrez votre prompt ici pour l'optimiser...",
+    "advancedOptions": "Options Avancées",
+    "optimizeButton": "Optimiser le Prompt",
+    "loading": "🧪 Labratorium IA optimise votre prompt...",
+    "resultTitle": "Prompt Optimisé :",
+    "copyButton": "Copier",
+    "optimizationType": "Type d'Optimisation :"
+  },
+  "settings": {
+    "configHeader": "🔧 Configuration",
+    "configSubtext": "Configurez les paramètres de votre fournisseur IA ci-dessous.",
+    "aiProvider": "Fournisseur IA :",
+    "apiKey": "Clé API :",
+    "apiKeyPlaceholder": "Entrez votre clé API...",
+    "model": "Modèle :",
+    "optimizationStyle": "Style d'Optimisation :",
+    "language": "Langue :",
+    "saveSettings": "Enregistrer les Paramètres",
+    "testApi": "Tester la Connexion API",
+    "version": "Version 4.0 (Dernière Stable)"
+  },
+  "messages": {
+    "enterApiKey": "Veuillez entrer une clé API",
+    "settingsSaved": "Paramètres enregistrés avec succès !",
+    "settingsFailed": "Échec de l'enregistrement des paramètres",
+    "apiKeyFirst": "Veuillez d'abord entrer une clé API",
+    "apiTesting": "Test en cours...",
+    "apiSuccess": "Connexion API réussie !",
+    "apiTestFailed": "Test API échoué : {error}",
+    "enterPrompt": "Veuillez entrer un prompt à optimiser",
+    "configureApiKey": "Veuillez configurer votre clé API dans les paramètres",
+    "optimizationFailed": "Optimisation échouée : {error}",
+    "copied": "Copié !",
+    "copyFailed": "Échec de la copie dans le presse-papiers"
+  },
+  "templates": {
+    "creative": "Créez un [type de contenu] qui [objectif spécifique]. Le résultat doit être [caractéristiques souhaitées] et inclure [éléments spécifiques].",
+    "analysis": "Analysez [données/sujet] et fournissez des insights sur [aspects spécifiques]. Concentrez-vous sur [domaines clés] et présentez les résultats en [format souhaité].",
+    "writing": "Rédigez un [type de contenu] sur [sujet] pour [audience]. Le ton doit être [ton] et inclure [exigences spécifiques].",
+    "coding": "Écrivez du code [langage] qui [fonctionnalité]. Le code doit [exigences] et suivre [normes/modèles]."
+  },
+  "quickActions": {
+    "creative": "🎨 Créatif",
+    "analysis": "📊 Analyse",
+    "writing": "✍️ Rédaction",
+    "coding": "💻 Programmation"
+  },
+  "models": {
+    "fastest": "Plus Rapide",
+    "latest": "Plus Récent",
+    "mostCapable": "Plus Performant"
+  },
+  "providers": {
+    "anthropic": "Anthropic (Claude)",
+    "openai": "OpenAI (GPT)",
+    "google": "Google (Gemini)"
+  },
+  "styles": {
+    "comprehensive": "Analyse Complète",
+    "quick": "Améliorations Rapides",
+    "structured": "Approche Structurée",
+    "creative": "Amélioration Créative"
+  },
+  "optimizationTypes": {
+    "general": "Amélioration Générale",
+    "clarity": "Clarté et Spécificité",
+    "creativity": "Amélioration Créative",
+    "technical": "Précision Technique",
+    "concise": "Rendre Concis",
+    "detailed": "Ajouter Plus de Détails"
+  },
+  "privacy": {
+    "notice": "🔒 Avis de Confidentialité : Cette extension fonctionne entièrement dans votre navigateur. Votre clé API est stockée localement et vos prompts sont envoyés directement aux serveurs du fournisseur choisi. Labratorium.com n'a pas accès à vos données."
+  },
+  "apiKeyHelp": {
+    "anthropic": "Obtenez votre clé API depuis la Console Anthropic",
+    "openai": "Obtenez votre clé API depuis la Plateforme OpenAI",
+    "google": "Obtenez votre clé API depuis Google AI Studio"
+  }
+}
