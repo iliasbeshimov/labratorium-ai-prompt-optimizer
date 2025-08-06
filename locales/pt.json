@@ -28,7 +28,7 @@
     "language": "Idioma:",
     "saveSettings": "Salvar Configurações",
     "testApi": "Testar Conexão API",
-    "version": "Versão 4.0 (Mais Recente Estável)"
+    "version": "Versão 4.0.1 (Mais Recente Estável)"
   },
   "messages": {
     "enterApiKey": "Por favor, insira uma chave API",

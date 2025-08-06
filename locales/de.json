@@ -28,7 +28,7 @@
     "language": "Sprache:",
     "saveSettings": "Einstellungen Speichern",
     "testApi": "API-Verbindung Testen",
-    "version": "Version 4.0 (Neueste Stabile)"
+    "version": "Version 4.0.1 (Neueste Stabile)"
   },
   "messages": {
     "enterApiKey": "Bitte geben Sie einen API-Schlüssel ein",

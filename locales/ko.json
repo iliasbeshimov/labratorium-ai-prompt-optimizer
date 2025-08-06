@@ -28,7 +28,7 @@
     "language": "언어:",
     "saveSettings": "설정 저장",
     "testApi": "API 연결 테스트",
-    "version": "버전 4.0 (최신 안정)"
+    "version": "버전 4.0.1 (최신 안정)"
   },
   "messages": {
     "enterApiKey": "API 키를 입력해주세요",

@@ -28,7 +28,7 @@
     "language": "Language:",
     "saveSettings": "Save Settings",
     "testApi": "Test API Connection",
-    "version": "Version 4.0 (Latest Stable)"
+    "version": "Version 4.0.1 (Latest Stable)"
   },
   "messages": {
     "enterApiKey": "Please enter an API key",
